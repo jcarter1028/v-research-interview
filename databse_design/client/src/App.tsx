@@ -11,10 +11,9 @@ function App() {
 
   const [queryResults, setQueryResults] = useState<Material[]>([]);
 
-  const searchHandler = useCallback((searchVal: string) => {
+  const searchHandler = useCallback( async(searchVal: string) => {
     // Call the API handler with query parameter
-    console.log("Search handler?", searchVal)
-    const queryData = getData(searchVal);
+    const queryData = await getData(searchVal);
     setQueryResults(queryData)
 
   }, []);

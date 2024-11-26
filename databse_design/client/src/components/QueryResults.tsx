@@ -51,10 +51,13 @@ type QueryResultsProps = {
     data: Material[]
 }
 function QueryResults({ data }: QueryResultsProps) {
+    console.log("data: ", data);
   return (
         <div>
             <h2>Results:</h2>   
-            <Table data={data}/>
+            {data.length > 0 ? 
+                <Table data={data}/>: 
+                <div>No data to display</div>}
         </div>
   )
 }

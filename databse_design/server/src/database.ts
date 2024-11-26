@@ -1,10 +1,3 @@
-import axios from "axios"
-
-
-// For demo purposes, we I am setting to localhost. 
-// For any hosted versions, this would be set using a .env file
-const serverUrl = 'http://localhost:3000'; 
-
 export type Material = {
     materialId: string,
     materialName: string,
@@ -18,8 +11,6 @@ export type Material = {
     supplyRisk: number | null,
     criticalValue: number | null
 }
-
-
 
 const exampleData: Material[] = [
     {
@@ -50,23 +41,10 @@ const exampleData: Material[] = [
     }
 ]
 
-
-const getData = async (queryParam: string): Promise<Material[]> => {
-    const url = `${serverUrl}/data`;
-
-       //console.log("GET DATA: ", queryParam); 
-
-       try {
-            const response = await axios.get(url);
-            const data = await response.data;
-            return data;
-        } catch (err) {
-            console.log("Error retrieving data: ", err);
-            // return an error message if this is the case!
-        }
-        return []; 
+const getMaterialData = (): Material[] => {
+    return exampleData;
 }
 
 export {
-    getData
+    getMaterialData
 }
