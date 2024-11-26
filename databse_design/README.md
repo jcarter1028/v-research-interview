@@ -24,6 +24,7 @@ Filter based on
 
 Use query parameters to do the filering
 ```
+GET /data?any={search_val}
 GET /data?material_name={material_name}
 GET /data?material_id={mat_id}
 GET /data?manufacturer_name={manufacturer_name}

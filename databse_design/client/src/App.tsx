@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
 import SearchBar from './components/SearchBar'
+import QueryResults from './components/QueryResults';
 
 import { getData } from './utils/api';
 import type { Material } from './utils/api';
@@ -22,7 +23,9 @@ function App() {
     <>
       <h1>Materials Dataset</h1>
       <SearchBar searchCallback={searchHandler} />
+      <QueryResults data={queryResults}/>
     </>
+
   )
 }
 

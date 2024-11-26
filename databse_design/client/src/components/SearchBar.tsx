@@ -16,13 +16,10 @@ function SearchBar({ searchCallback }: SearchBarProps) {
     searchCallback(val);
   }
   return (
-    <>
     <div className='searchBar'>
       <input onChange={e => setVal(e.target.value)}></input>
       <button onClick={submitHandler}>Search</button>
     </div>
-
-    </>
   )
 }
 
