@@ -27,3 +27,6 @@ In other terminal, set to materials schema:
 Join queries:
 `SELECT * FROM brand INNER JOIN manufacturer ON (brand.manufacturer_id=manufacturer.id);`
 `SELECT (brand.name,type,manufacturer.name) FROM brand INNER JOIN manufacturer ON (brand.manufacturer_id=manufacturer.id) WHERE manufacturer_id=2;`
+
+
+`SELECT brand.id, brand.name AS brand_name, type, manufacturer.name AS manunfacturer_name   FROM brand INNER JOIN manufacturer ON (brand.manufacturer_id=manufacturer.id);`
