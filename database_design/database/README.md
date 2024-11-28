@@ -7,6 +7,11 @@ Running postrgresql database. For demo purposes, simply using the postres user, 
 
 ## Create Databse Schema
 
+1. Create database
+```
+CREATE DATABASE 'db1'
+```
+
 The Schema for the databse is defined in `schema.sql`. To create the tables within the postresql database, 
 
 TODO: change cmd to psql
