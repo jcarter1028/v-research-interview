@@ -1,4 +1,4 @@
-import type { Manufacturer, Material } from "./types"
+import type { Brand, Manufacturer, Material, Property } from "./types"
 
 const pgQuery = 
 { text:
@@ -33,14 +33,41 @@ const insertMaterialQuery = (materials: Material[]) => {
     return query;
 }
 
-const buildInsertQuery = (tableName: string, valuesStr: string) => {
-
+const insertBrandQuery = (brands: Brand[]) => {
+    let valueField = 'VALUES';
+    brands.forEach((brand,i) => {
+        valueField = `${valueField} ${i === 0 ? '' : ','} (${brand.id}, '${brand.name}', '${brand.type}', ${brand.manufacturerId}, '${brand.materialId}')`
+    })
+    const query = `INSERT INTO brand (id, name, type, manufacturer_id, material_id) ${valueField}`;
+    return query;
 }
 
+const valOrNullStr = (value: number | null) => {
+    return value === null ? 'NULL' : value;
+}
+
+const insertPropertiesQuery = (properties: Property[]) => {
+    let valueField = 'VALUES';
+    properties.forEach((property, i) => {
+        valueField = `${valueField} ${i === 0 ? '' : ','} (
+            ${property.id}, 
+            ${property.brandId}, 
+            ${valOrNullStr(property.ghg)}, 
+            ${valOrNullStr(property.energyInput)}, 
+            ${valOrNullStr(property.euRegulation)}, 
+            ${valOrNullStr(property.supplyRisk)}, 
+            ${valOrNullStr(property.criticalValue)}
+        )`
+    })
+    const query = `INSERT INTO properties (id, brand_id, ghg, energy_input, eu_regulation, supply_risk, critical_value) ${valueField}`;
+    return query;
+}
 
 export {
     deleteAllDataFromTableQuery,
     insertManufacturerRowQuery,
     insertManufacturerQuery,
-    insertMaterialQuery
+    insertMaterialQuery,
+    insertBrandQuery,
+    insertPropertiesQuery
 }

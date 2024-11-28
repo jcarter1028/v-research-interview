@@ -31,11 +31,11 @@ CREATE TABLE IF NOT EXISTS Materials.Brand (
 CREATE TABLE IF NOT EXISTS Materials.Properties (
     id int PRIMARY KEY,
     brand_id int REFERENCES Materials.Brand(id), -- FK
-    ghg float,
-    energy_input float,
-    eu_regulation int,
-    supply_risk int,
-    critical_value float
+    ghg float NULL,
+    energy_input float NULL,
+    eu_regulation int NULL,
+    supply_risk int NULL,
+    critical_value float NULL
 );
 
 

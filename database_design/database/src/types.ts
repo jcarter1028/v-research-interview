@@ -8,7 +8,7 @@ export type Material = {
     name: string,
     cas: string
 }
-export type BrandType = "generic" | "polyers" | "genericFibres" | "metalsAndAlloys";
+export type BrandType = "generic" | "polyers" | "generic_fibres" | "metals_and_alloys";
 export type Brand = {
     id: number,
     manufacturerId: number,

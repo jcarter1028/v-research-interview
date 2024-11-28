@@ -38,8 +38,8 @@ const getBrandType = (cellVal: string): BrandType => {
     switch (cellVal) {
         case "Generic": return "generic";
         case "Brands - Polyers": return "polyers";
-        case "Generic Fibres": return "genericFibres";
-        case "Metals & Alloys": return "metalsAndAlloys"
+        case "Generic Fibres": return "generic_fibres";
+        case "Metals & Alloys": return "metals_and_alloys"
         default: return "generic";
     }
 }

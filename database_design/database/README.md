@@ -17,3 +17,8 @@ $ "/Applications/Postgres.app/Contents/Versions/17/bin/psql" -p5433 "db1" -U pos
 
 In other terminal, set to materials schema: 
 `SET search_path TO materials, public;`
+
+
+Join queries:
+`SELECT * FROM brand INNER JOIN manufacturer ON (brand.manufacturer_id=manufacturer.id);`
+`SELECT (brand.name,type,manufacturer.name) FROM brand INNER JOIN manufacturer ON (brand.manufacturer_id=manufacturer.id) WHERE manufacturer_id=2;`
