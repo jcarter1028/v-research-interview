@@ -2,7 +2,7 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
 
-import { getManufacturers, getMaterials, getBrands, getMaterialData, getDataByBrandName, getFilteredValues, FilterType } from "./database";
+import { getManufacturers, getMaterials, getBrands, getFilteredData } from "./database";
 
 const app: Express = express();
 
@@ -11,32 +11,16 @@ app.use(cors());
 const port = process.env.PORT || 3000;
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
+  res.send("Materials Database server: running");
 });
 
 app.get("/data", async (req: Request, res: Response) => {
-    const params = req.query;
-    let filterType: FilterType | undefined;
-    let value;
-    if (params.brand_name) {
-      filterType = "brandName";
-      value = params.brand_name;
-    } else if (params.manufacturer_name) {
-      filterType = "manufacturerName"
-      value = params.manufacturer_name;
-    } else if (params.material_name) {
-      filterType = "materialName"
-      value = params.material_name;
-    } else if (params.material_id) {
-      filterType = "materialId"
-      value = params.material_id;
-    }
-    if (filterType) {
-      const data = await getFilteredValues(filterType, value as string);
-      console.log("DATA: ", data);
+    const filterVal = req.query.filter;
+    if (filterVal) {
+      const data = await getFilteredData(filterVal as string);
       res.json(data);
     } else {
-      res.json([])
+      res.json([]);
     }
 });
 

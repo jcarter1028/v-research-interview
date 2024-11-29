@@ -15,7 +15,7 @@ const pool = new Pool({
     port: DB_PORT,
 })
 
-const allDataQuery = `
+const allDataQueryText = `
 SELECT b.id AS brand_id
     , b.name AS brand_name
     , b.type
@@ -31,11 +31,8 @@ INNER JOIN Materials.material mat
     on b.material_id = mat.id
 INNER JOIN Materials.properties p
     on p.brand_id = b.id
+WHERE b.name = $1::text OR man.name = $1::text OR mat.id = $1::text or mat.name = $1::text
 `;
-
-const simpleQuery = `
-
-SELECT * from brand;`
 
 export type Material = {
     materialId: string,
@@ -51,45 +48,18 @@ export type Material = {
     criticalValue: number | null
 }
 
-const exampleData: Material[] = [
-    {
-        materialId: "PA6",
-        materialName: "Polyamide 6",
-        cas: "25038-54-4",
-        manufacturerName: "Generic",
-        brandType: "Generic",
-        brandName: "Generic PA6",
-        ghg: 9.3,
-        energyInput: 123.39,
-        euReguation: 0,
-        supplyRisk: null,
-        criticalValue: 1
-    },
-    {
-        materialId: "PA6",
-        materialName: "Polyamide 6",
-        cas: "25038-54-4",
-        manufacturerName: "Domo",
-        brandType: "Polyers",
-        brandName: "Econamid FL6",
-        ghg:0.25,
-        energyInput: 0.3,
-        euReguation:0,
-        supplyRisk: 6,
-        criticalValue: null
-    }
-]
-
-const getMaterialData = (): Material[] => {
-    return exampleData;
+const getFilteredData = async (varVal: string) => {
+    console.log("VALUE: ", varVal);
+    const res = await pool.query(allDataQueryText, [varVal]);
+    return res.rows;
 }
 
-const getDataByBrandName = async (brandName: string) => {
+/*const getDataByBrandName = async (brandName: string) => {
     const queryStr = `
         ${allDataQuery}
         WHERE b.name = '${brandName}'
     ;`
-    const res = await pool.query(queryStr);
+    const res = await pool.query(queryStr, );
     return res.rows;
 }
 
@@ -120,7 +90,7 @@ const getFilteredValues = async (type: FilterType, value: string) => {
         return res.rows;
     }
     return [];
-} 
+} */
 
 
 const getManufacturers = async () => {
@@ -141,12 +111,9 @@ const getBrands = async () => {
     return res.rows;
 }
 
-
 export {
     getManufacturers,
-    getMaterialData,
     getMaterials,
     getBrands,
-    getDataByBrandName,
-    getFilteredValues
+    getFilteredData
 }
