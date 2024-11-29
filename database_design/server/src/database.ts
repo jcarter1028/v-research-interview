@@ -30,9 +30,7 @@ INNER JOIN Materials.manufacturer man
 INNER JOIN Materials.material mat
     on b.material_id = mat.id
 INNER JOIN Materials.properties p
-    on p.brand_id = b.id
-WHERE b.name = $1::text OR man.name = $1::text OR mat.id = $1::text or mat.name = $1::text
-`;
+    on p.brand_id = b.id`;
 
 export type Material = {
     materialId: string,
@@ -48,9 +46,20 @@ export type Material = {
     criticalValue: number | null
 }
 
+const getAllData = async () => {
+    const res = await pool.query(allDataQueryText);
+    return res.rows;
+}
+
 const getFilteredData = async (varVal: string) => {
-    console.log("VALUE: ", varVal);
-    const res = await pool.query(allDataQueryText, [varVal]);
+    const filterConditionSql = `
+    WHERE b.name = $1::text 
+    OR man.name = $1::text 
+    OR mat.id = $1::text
+    OR mat.name = $1::text`;
+    const queryStr = `${allDataQueryText} ${filterConditionSql}`
+
+    const res = await pool.query(queryStr, [varVal]);
     return res.rows;
 }
 
@@ -115,5 +124,6 @@ export {
     getManufacturers,
     getMaterials,
     getBrands,
+    getAllData,
     getFilteredData
 }

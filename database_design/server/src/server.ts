@@ -2,7 +2,7 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
 
-import { getManufacturers, getMaterials, getBrands, getFilteredData } from "./database";
+import { getManufacturers, getMaterials, getBrands, getAllData, getFilteredData } from "./database";
 
 const app: Express = express();
 
@@ -17,10 +17,11 @@ app.get("/", (req: Request, res: Response) => {
 app.get("/data", async (req: Request, res: Response) => {
     const filterVal = req.query.filter;
     if (filterVal) {
-      const data = await getFilteredData(filterVal as string);
-      res.json(data);
+      const filteredData = await getFilteredData(filterVal as string);
+      res.json(filteredData);
     } else {
-      res.json([]);
+      const allData = await getAllData();
+      res.json(allData);
     }
 });
 
