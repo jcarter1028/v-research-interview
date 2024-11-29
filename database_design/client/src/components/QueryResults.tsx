@@ -1,36 +1,62 @@
 import type { Material } from "../utils/api"
 
+import './QueryResults.css';
 
 type CellProp = {
-    value: string,
+    label: string | JSX.Element,
+    filterValue: string,
     searchCallback: (filter: string) => void
 }
-function FilterCell ( { value, searchCallback} :  CellProp) {
+function FilterCell ( { label, filterValue, searchCallback} :  CellProp) {
     const clickHandler = () => {
-        searchCallback(value);
+        searchCallback(filterValue);
     }
     return (
         <td>
-            <div onClick={clickHandler}>{value}</div>
+            <div className='filterCell' onClick={clickHandler}>{label}</div>
         </td>
     )
 }
+
+type MaterialCellLabelProps = {
+    id: string,
+    name: string,
+    cas: string
+}
+function MaterialCellLabel( { id, name, cas}: MaterialCellLabelProps ): JSX.Element {
+    return (
+        <>
+            <div><span className="boldText">{name}</span> ({id})</div>
+            <div>CAS: {cas}</div>
+        </>
+    )
+}
+
 type RowProps = {
     data: Material
     searchCallback: (filter: string) => void
 }
+
 function Row({ data, searchCallback }: RowProps) {
 
     return (
         <tr>
-            <FilterCell value={data.brand_name} searchCallback={searchCallback}/>
-            <td>{data.brand_type}</td>
-            <FilterCell value={data.manufacturer_name} searchCallback={searchCallback}/>
-            <FilterCell value={data.material_id} searchCallback={searchCallback}/>
-            <FilterCell value={data.material_name} searchCallback={searchCallback}/>
-            <td>{data.cas}</td>
-            <td>{data.ghg}</td>
-            <td>{data.energy_input}</td>
+            <FilterCell 
+                label={`${data.brand_name} (${data.brand_type})`}
+                filterValue={data.brand_name} 
+                searchCallback={searchCallback}
+            />
+            <FilterCell 
+                label={data.manufacturer_name}
+                filterValue={data.manufacturer_name}
+                searchCallback={searchCallback}/>
+            <FilterCell 
+                label={<MaterialCellLabel id={data.material_id} name={data.material_name} cas={data.cas}/>}
+                searchCallback={searchCallback}
+                filterValue={data.material_id}
+                />
+            <td>{data.ghg !== null ? data.ghg.toFixed(2) : null}</td>
+            <td>{data.energy_input !== null ? data.energy_input.toFixed(2) : null}</td>
             <td>{data.eu_regulation}</td>
             <td>{data.supply_risk}</td>
             <td>{data.critical_value}</td>
@@ -47,15 +73,12 @@ function Table({ data, searchCallback }: TableProps) {
         <table>
             <tbody>
                 <tr>
-                    <th>Brand Name</th>
-                    <th>Brand Type</th>
-                    <th>Manufacturer Name</th>
-                    <th>Material Id</th>
-                    <th>Material Name</th>
-                    <th>CAS</th>
+                    <th>Brand</th>
+                    <th>Manufacturer</th>
+                    <th>Material</th>
                     <th>GHG</th>
                     <th>Energy Input</th>
-                    <th>EU Rgulation</th>
+                    <th>EU Regulation</th>
                     <th>Supply Risk</th>
                     <th>Critical Value</th>
                 </tr>
@@ -78,7 +101,7 @@ function QueryResults({ data, filter, searchCallback }: QueryResultsProps) {
             <h2>Results:</h2>   
             {data.length > 0 ? 
             <div>
-                <div>Filtering using: {filter}</div>
+                <div className="filter-text">Filtering using: <span className="boldText">{filter}</span></div>
                 <Table data={data} searchCallback={searchCallback}/>
             </div>
                 : 

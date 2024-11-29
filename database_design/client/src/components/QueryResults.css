@@ -1,0 +1,31 @@
+.filter-text {
+    margin: 2em;
+}
+
+.boldText {
+    font-weight: bold;
+}
+
+.filterCell {
+    color:teal;
+    cursor: pointer;
+}
+
+table {
+    border-collapse: collapse;
+    border-radius: 1em;
+    margin: auto;
+  }
+
+tr th {
+    background-color: #eee;
+    padding: 10px;
+}
+tbody tr {
+    border-bottom: 1px solid #aaa;
+
+}
+
+tr td {
+    padding: 10px;
+}
