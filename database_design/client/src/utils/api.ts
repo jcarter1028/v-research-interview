@@ -6,57 +6,23 @@ import axios from "axios"
 const serverUrl = 'http://localhost:3000'; 
 
 export type Material = {
-    materialId: string,
-    materialName: string,
+    material_id: string,
+    material_name: string,
     cas: string,
-    manufacturerName: string,
-    brandType: string,
-    brandName: string,
+    manufacturer_name: string,
+    brand_type: string,
+    brand_name: string,
     ghg: number,
-    energyInput: number,
-    euReguation: number | null,
-    supplyRisk: number | null,
-    criticalValue: number | null
+    energy_input: number,
+    eu_regulation: number | null,
+    supply_risk: number | null,
+    critical_value: number | null
 }
 
-
-
-const exampleData: Material[] = [
-    {
-        materialId: "PA6",
-        materialName: "Polyamide 6",
-        cas: "25038-54-4",
-        manufacturerName: "Generic",
-        brandType: "Generic",
-        brandName: "Generic PA6",
-        ghg: 9.3,
-        energyInput: 123.39,
-        euReguation: 0,
-        supplyRisk: null,
-        criticalValue: 1
-    },
-    {
-        materialId: "PA6",
-        materialName: "Polyamide 6",
-        cas: "25038-54-4",
-        manufacturerName: "Domo",
-        brandType: "Polyers",
-        brandName: "Econamid FL6",
-        ghg:0.25,
-        energyInput: 0.3,
-        euReguation:0,
-        supplyRisk: 6,
-        criticalValue: null
-    }
-]
-
-
 const getData = async (queryParam: string): Promise<Material[]> => {
-    const url = `${serverUrl}/data`;
-
-       //console.log("GET DATA: ", queryParam); 
-
-       try {
+    if (queryParam) {
+        const url = `${serverUrl}/data?filter=${queryParam}`;
+        try {
             const response = await axios.get(url);
             const data = await response.data;
             return data;
@@ -64,7 +30,8 @@ const getData = async (queryParam: string): Promise<Material[]> => {
             console.log("Error retrieving data: ", err);
             // return an error message if this is the case!
         }
-        return []; 
+    }
+    return [];
 }
 
 export {

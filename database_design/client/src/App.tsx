@@ -10,19 +10,21 @@ import './App.css'
 function App() {
 
   const [queryResults, setQueryResults] = useState<Material[]>([]);
+  const [filterVal, setFilterVal] = useState<string>('');
 
   const searchHandler = useCallback( async(searchVal: string) => {
     // Call the API handler with query parameter
     const queryData = await getData(searchVal);
     setQueryResults(queryData)
+    setFilterVal(searchVal);
 
   }, []);
 
   return (
     <>
       <h1>Materials Dataset</h1>
-      <SearchBar searchCallback={searchHandler} />
-      <QueryResults data={queryResults}/>
+      <SearchBar searchCallback={searchHandler} filterVal={filterVal}/>
+      <QueryResults data={queryResults} filter={filterVal} searchCallback={searchHandler}/>
     </>
 
   )

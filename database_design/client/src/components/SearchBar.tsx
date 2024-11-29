@@ -1,23 +1,28 @@
-import { useState, useEffect, ChangeEvent } from "react"
+import { useState,  useEffect} from "react"
 
 import './SearchBar.css'
 
 
 type SearchBarProps = {
+  filterVal: string,
   searchCallback:   (filter: string) => void,
 }
 
-function SearchBar({ searchCallback }: SearchBarProps) {
+function SearchBar({ searchCallback, filterVal }: SearchBarProps) {
 
-
-  const [val, setVal] = useState<string>("");
-
+  const [val, setVal] = useState<string>(filterVal);
+  
   const submitHandler = () => {
     searchCallback(val);
   }
+
+  useEffect(() => {
+    setVal(filterVal);
+  }, [filterVal])
+
   return (
     <div className='searchBar'>
-      <input onChange={e => setVal(e.target.value)}></input>
+      <input onChange={e => setVal(e.target.value)} value={val}></input>
       <button onClick={submitHandler}>Search</button>
     </div>
   )

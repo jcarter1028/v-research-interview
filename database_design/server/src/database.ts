@@ -18,7 +18,7 @@ const pool = new Pool({
 const allDataQueryText = `
 SELECT b.id AS brand_id
     , b.name AS brand_name
-    , b.type
+    , b.type AS brand_type
     , man.name AS manufacturer_name
     , mat.id AS material_id
     , mat.name AS material_name
