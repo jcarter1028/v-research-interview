@@ -1,0 +1,62 @@
+Notes and questions on the data science tasks:
+
+* Read data into dataframe. read_csv or read_excel. 
+* Seemed to be a lot of duplicate data so tried to filter it out using drop_duplicates. 
+    - This seemed to work on csv file format
+    - Did not seem to work on excel file format. So stuck wioth csv because the data was duplication
+
+* Plotting: For each serial number, there are over 100 000 data points. Plotting on one graph didn't seem very useful,
+so to visualise trends in the data, I plotted a subset of 5000 points.
+
+
+
+
+Exploring the data for the regression models.
+
+output_current_ma: 8 values in total! [    0.    nan 13990.  5120. 13910.  6880. 13900.  7230.]
+Essentially, between 0
+
+
+Do these values represent: on/off in terms of:
+* output_voltage_v
+* output_curent_ma
+* active_power_mw
+
+
+Pre-processing tasks?
+* Turn all data into ons and offs, and calculate mean of what "on" means and what "off" means
+    get aveage value for on and average valur for off.
+
+* Afer inspection of the data, it would seem that only the on-off value really makes a difference. Create binary regression model using the on-ff value.
+* Evaluate it using on-off results? Or actual values? Or both?
+
+
+
+Can also add the values of delta t and cg temperature as well, and compare how well the model did.
+
+
+
+Use Logistic Regression: 
+It is a statistical method for predicting binary classes. Outcome is dichotomous (only 2 available classes).
+Computes the probability of an event ocurring. It is a special case of linear regression where the target variable is categorical in nature.
+
+Estimated using the Maximum likelihood estimation (MLE) while usually linear regression uses ordinary least square.
+
+
+df_30_binary = df_30.assign(output_voltage_on_off = df_30['output_voltage_v'])
+
+Evaluate logistical model with confusion matrix (showing number of correct predictions and wrong predictions for both cases)
+Logistic model evaluation can also be done with clasiication reports:
+Classificatio report with Precision, recall, accuracy, f1 score:
+Precision: percentage of correct positive predictions relative to total predictions
+Recall: Percentage of correct positive predctions relative to total positive predictions
+F1 Score: Weighted mean of precision and recall:  2 * (Precision * Recall) / (Precision + Recall)
+Support: tells how many points belong to each class in the dataset. 
+
+
+Things to consider: 
+* types of models
+* lenghts of training vs testing datasets 
+* initial parameters / weights?
+* types of evaluation
+
