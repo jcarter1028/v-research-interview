@@ -60,3 +60,24 @@ Things to consider:
 * initial parameters / weights?
 * types of evaluation
 
+
+
+Forecasting:
+Could we use things like: ForecasterRecursive
+
+It needs a regressor and a time lag.
+Look at how regularly the spikes occur. Try and include 3 spikes?
+that looks like 200 ish points
+
+skforecast
+
+Recursive Forcasting involves predicting future values from past time steps.
+
+Direct multi-step forecasting: requires a new model for each step prediction in the future.
+
+In this case, the spikes look like they happen periodically, so it a linear forecasting model should be fine. 
+(essentially a sliding window through the data to learn)
+
+
+This data is really confusing because there seems to be 
+loads of values for the time series.
