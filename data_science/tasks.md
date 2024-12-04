@@ -19,7 +19,7 @@ The dataset for each serial number is over 100 thousand data points. Plotting al
 
 TODO: import data
 
-## Task 2: Regression models
+## Task 2: Regression models
 
 The instructions are to create two different regression models to predict the values for the power, voltage and current based on values for delta_t_ms, on-off and cg_temperature. And evaluate the models.
 
@@ -34,3 +34,160 @@ I created a `to_on_off` lambda function to transform each of the target columns 
 I then decided to predict if the value would be on, or off. 
 
 I tried linear regression, and logistic regression (suitable for predicting binary classes)
+
+**Training and Testing dataset**
+
+I used the sklearn `train_test_split` helper to separate the dataset into 70% training and 30% testing data.
+
+I also made two training passes for each model: 
+* One using all the input variables: `delta_t_ms`, `on-off` and `cg_temperature_cel`.
+* The second one using only values for `on-off` 
+
+I could also have created models for each of combinations (e.g. `on-off` and `cg_temperature_cel`, `delta_t_ms` and `on-off` etc) but in the interest of time and for demo-ing purposes, I stuck with two results, for each model.
+
+### Linear Regression Model
+
+**Model used**: Sklearn `LinearRegression` model, building a separate model for power, voltage and current that we are trying to predict.
+
+
+In a linear regression model, there are several metrics that can be used to determine how well a model has performed. These are based on the deviation between predictions testing values.
+
+Some examples of metrics that can be used
+
+
+**Results for training data containing `delta_t_ms`, `on-off` and `cg_temperature_cel`**
+
+<center>
+|    |Power    | Voltage | Current |
+|:---|-------- | :-----: | ------: |
+|MAE |0.11565  | 0.00906 | 0.01065 |
+|MSE |0.05658  | 0.00450 | 0.00582 |
+|R2  |0.77256  | 0.98117 | 0.97576 |
+</center>
+
+**Results for training data containing only `on-off`**
+<center>
+|    |Power    | Voltage | Current |
+|:---|-------- | :-----: | ------: |
+|MAE |0.11516  | 0.00906 | 0.01007 |
+|MSE |0.05826  | 0.00443 | 0.00469 |
+|R2  |0.76563  | 0.98150 | 0.98060 |
+</center>
+
+For voltage and current predictions, only using on-off seems the yield slightly better results. For power, however, the MAE improves slightly, but the MSE and R2 scores are slightly worse.
+
+Linear regression is the most straighforward regression model and I therefore wanted to try it out on this dataset. Considering the dataset is represented by binary on/off values though, I didn't expect it to work so well.
+
+### Logisitcal Regression Model Results
+
+**Model used**: Sklearn `LogisticRegression` model, building a separate model for power, voltage and current that we are trying to predict.
+
+Logistic regression is used for classification and should therefore be relatively well suited to this task.
+
+There are a number of metrics that can be used to calculate the accuracy of a model using logistic regression.
+* Confusion matrix: a tabular summary of True/False and Positive/Negative prediciton rates.
+* Accuracy score: number of correct predictions / number of predictions.
+* Precision: Number of true positives / total number of postivie predictions. Useful when the classes are very imbalanced.
+* Recall / Sensitivity: Number of true positives / (nuber of trie positives + number of false negatives). The higher this score, the better the model is at identifying positives.
+* Specificity: model ability to correctly predict negatives.
+* F1 score: Combine precision and recall and its harmonic mean. Useful for data imbalance.
+* Receiver Operating Characteristic (ROC) curve: used to obtain optimal probablity threshold to improve predictive capability of a machine learning model.
+
+I have used sklearn's confusion metric and classification report, which contain details of accuracy, precision, recall and f1 score. I have also included MSE (same as MAE in this case) for comparison with previous model.
+
+**Results for training data containing `delta_t_ms`, `on-off` and `cg_temperature_cel`**
+
+<center>
+
+*Power*
+|MSE    | Accuracy |
+|-------| :-------:| 
+|0.06332| 0.94     | 
+
+
+Confusion Matrix:
+![power matrix](plots/cnf_matrix_power_all.png)
+
+Classification Report:
+![power report](plots/class_power_all.png)
+
+
+*Voltage*
+|MSE    | Accuracy |
+|-------| :-------:| 
+|00.0046| 1.00     | 
+
+
+Confusion Matrix:
+![voltage matrix](plots/cnf_matrix_voltage_all.png)
+
+Classification Report:
+![voltage report](plots/class_voltage_all.png)
+
+
+*Current*
+|MSE    | Accuracy |
+|-------| :-------:| 
+|0.00590| 0.99     | 
+
+
+Confusion Matrix:
+![current matrix](plots/cnf_matrix_current_all.png)
+
+Classification Report:
+![current report](plots/class_current_all.png)
+</center>
+
+**Results for training data containing only `on-off`**
+
+
+<center>
+
+*Power*
+|MSE    | Accuracy |
+|-------| :-------:| 
+|0.06534| 0.93     | 
+
+
+Confusion Matrix:
+![power matrix](plots/cnf_matrix_power_on-off.png)
+
+Classification Report:
+![power report](plots/class_power_on-off.png)
+
+
+*Voltage*
+|MSE    | Accuracy |
+|-------| :-------:| 
+|00.00445| 0.996     | 
+
+
+Confusion Matrix:
+![voltage matrix](plots/cnf_matrix_voltage_on-off.png)
+
+Classification Report:
+![voltage report](plots/class_voltage_on-off.png)
+
+
+*Current*
+|MSE    | Accuracy |
+|-------| :-------:| 
+|0.004711| 0.995s    | 
+
+
+Confusion Matrix:
+![current matrix](plots/cnf_matrix_current_on-off.png)
+
+Classification Report:
+![current report](plots/class_current_on-off.png)
+</center>
+
+
+## Task 3: Time Forecasting
+
+Instructions:
+*Make a model that predicts the future values of `active_power_w` based on the past values of `active_power_w`.*
+
+My understanding is to use the `date` and `active_power_w` to feed into a time forecasting model.
+
+However, there seems to be over 100 data points for each time slot.
