@@ -16,7 +16,7 @@ Using those observations, I designed the following schema for the dataset:
 
 ![database schema](database/materials_database.png)
 
-*Notes: I have designed Property Keys and their data types with the little knowledge I had on the data. More details on expected values for these keys could help with designining stricter data types. For example, EU Regulation could potentually be only 1 of a few values? Stricter values, e.g. a `set` would help with data validation.*
+*Notes: I have designed Property Keys and their data types with the little knowledge I had on the data. More details on expected values for these keys could help with designing stricter data types. For example, EU Regulation could potentially be only 1 of a few values? Stricter values, e.g. a `set` would help with data validation.*
 
 ## Task 2: Data Import
 
@@ -33,9 +33,9 @@ I have created a small TypeScript project in the `database/` folder to open and 
 *Note: I have used TypeScript for this task, as I am more familiar with the language and array manipluation than python. However if the database was much bigger, I would have created a python script using pandas to parse the excel file using dataframe*
 
 ## Task 4: Server
-*Create a server with API endpoints return material properties in json format. Based on brand, manufacturer, or material*
+*Create a server with API endpoints return material properties in json format. Should allow filtering by brand name, manufacturer name, material name or material id.*
 
-In the `server/` folder, I have created an express server. There are two files: 
+In the `server/` folder, I have created a TypeScript express server. There are two files: 
 * `server.ts` - the implementation of the express server and handling of endpoints.
 * `database.ts` - connection to the postgresql database using the npm `pg` package, and managing queries to the database.
 
@@ -62,9 +62,7 @@ This returns an array of all the data in the dataset in the following format:
         "supply_risk": null,
         "critical_value": 1
   },
-  {
     ...
-  }
 ]
 ```
 
@@ -188,7 +186,7 @@ To filter, an additional constraint is added to the query:
     OR mat.id = $1::text
     OR mat.name = $1::text
 ```
-where `$1` is the filter variable passed on using query parameters.
+where `$1` is the filter variable passed on using the query parameter.
 
 This whole query therefore allows to filter by brand name, manufacturer name, material id and material name through one re-usable query.
 
@@ -200,3 +198,31 @@ I have also created a more generic query to retrieve the id and name for a table
 
 
 
+## Tasks 3, 4, and 6: Client
+
+*Build Web client with search bar to:*
+* *Search by brand, material name, material id, or manufacturer name*
+* *Call server APIs to retrieve filtered data*
+* *Display results on web page*
+
+In the `client/` folder, I have built a React application (bootstrapped using `Vite`).
+
+It builds a responsive UI with a search bar & button, and displays query results in tabular format.
+
+**Components:**
+* `App.tsx`: Main component of the app pulling together Search bar, and Results, and handles calls to API helpers.
+* `SearchBar.tsx`: Implements Search bar and calls submit callback when search button pressed.
+* `QueryResults.tsx`: Displays results in tabular format. The table cells containing information on brand, manufacturer and material are clickeable, and will call the filtering method on the clicked value.
+
+![Client UI](client_ui.png)
+
+### Future Works
+For the purpose of demonstration, this web app shows a very simple table with the results. The following features could be added to improve the user experience, and usefulness of the tool in general:
+
+**Search Bar**
+* Search bar helpers, with auto complete based on available values to search.
+* Allow searching and for multiple values. This could be done using multiple search bars
+
+**Table**
+* Table Styling
+* Display results by filteing property column: e.g. by ascending GHG.

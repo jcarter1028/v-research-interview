@@ -23,6 +23,9 @@ function App() {
   return (
     <>
       <h1>Materials Dataset</h1>
+      <div>
+        Enter a brand name, manufacturer name, materials name or materials id (formula) to retrieve filtered restuls.
+      </div>
       <SearchBar searchCallback={searchHandler} filterVal={filterVal}/>
       <QueryResults data={queryResults} filter={filterVal} searchCallback={searchHandler}/>
     </>

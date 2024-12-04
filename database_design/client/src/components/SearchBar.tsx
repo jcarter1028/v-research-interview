@@ -13,6 +13,7 @@ function SearchBar({ searchCallback, filterVal }: SearchBarProps) {
   const [val, setVal] = useState<string>(filterVal);
   
   const submitHandler = () => {
+    // Future Works: input validation
     searchCallback(val);
   }
 

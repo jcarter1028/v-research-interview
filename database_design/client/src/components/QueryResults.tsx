@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { Material } from "../utils/api"
 
 import './QueryResults.css';
@@ -96,6 +97,20 @@ type QueryResultsProps = {
 }
 function QueryResults({ data, filter, searchCallback }: QueryResultsProps) {
     console.log("data: ", data);
+    console.log("Filter: ", filter)
+
+    const [resultsString, setResultsString] = useState<string>('');
+
+    useEffect(() => {
+
+        if (filter) {
+            setResultsString(`No results filtering by: ${filter} `)
+        } else {
+            setResultsString(`No data to display. Try searching for a value.`)
+        }
+
+    }, [filter]);
+
   return (
         <div>
             <h2>Results:</h2>   
@@ -105,7 +120,7 @@ function QueryResults({ data, filter, searchCallback }: QueryResultsProps) {
                 <Table data={data} searchCallback={searchCallback}/>
             </div>
                 : 
-                <div>No data to display</div>}
+                <div>{resultsString}</div>}
         </div>
   )
 }
