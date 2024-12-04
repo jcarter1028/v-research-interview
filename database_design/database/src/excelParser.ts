@@ -19,12 +19,11 @@ const parseManufacturers = (rows: Array<any>): Array<Manufacturer> => {
 
 const parseMaterials = (rows: Array<any>): Array<Material> => {
     const materialIdRows = rows.map((row) => row[2]);
-    const materialIds = [...new Set(materialIdRows)].filter(id => id != null);
-    const materialRows = rows.map((row) => row.slice(2, 5));
+    const materialIds = [...new Set(materialIdRows)].filter(id => id != null); // Remove duplicates and nulls
+    const materialRows = rows.map((row) => row.slice(2, 5)); // Get relevant columnds for materials
     const materials = materialIds.map((id) => {
         //find first element that satisfies the requirements
         const material = materialRows.find(m => m[0] === id);
-  
             return {
                 id,
                 name: material[1],

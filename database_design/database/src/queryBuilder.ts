@@ -1,19 +1,10 @@
 import type { Brand, Manufacturer, Material, Property } from "./types"
 
-const pgQuery = 
-{ text:
-    'INSERT INTO "users" ("email", "name") VALUES ($1, $2), ($3, $4) RETURNING "id"',
-   values: 
-    [ 'test@example.com', 'Fred', 'test2@example.com', 'Lynda' ] 
-}
 
 const deleteAllDataFromTableQuery = (tableName: string) => {
     return `DELETE FROM ${tableName}`;
 }
 
-const insertManufacturerRowQuery = () => {
-    return `INSERT INTO manufacturer (id, name) VALUES ($1, $2);`
-}
 
 const insertManufacturerQuery = (manufacturers: Manufacturer[]) => {
     let valueField = 'VALUES';
@@ -65,7 +56,6 @@ const insertPropertiesQuery = (properties: Property[]) => {
 
 export {
     deleteAllDataFromTableQuery,
-    insertManufacturerRowQuery,
     insertManufacturerQuery,
     insertMaterialQuery,
     insertBrandQuery,

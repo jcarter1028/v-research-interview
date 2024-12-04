@@ -2,7 +2,7 @@
 import express, { Express, Request, Response } from "express";
 import cors from "cors";
 
-import { getManufacturers, getMaterials, getBrands, getAllData, getFilteredData } from "./database";
+import { getAllData, getFilteredData, getTableIdsAndNames } from "./database";
 
 const app: Express = express();
 
@@ -26,17 +26,17 @@ app.get("/data", async (req: Request, res: Response) => {
 });
 
 app.get("/manufacturers", async (_req: Request, res: Response) => {
-  const manufacturers = await getManufacturers();
+  const manufacturers = await getTableIdsAndNames('manufacturer');
   res.json(manufacturers);
 })
 
 app.get("/materials", async (_req: Request, res: Response) => {
-  const materials = await getMaterials();
+  const materials = await getTableIdsAndNames('material');
   res.json(materials);
 })
 
 app.get("/brands", async (_req: Request, res: Response) => {
-  const brands = await getBrands();
+  const brands = await getTableIdsAndNames('brand');
   res.json(brands);
 })
 

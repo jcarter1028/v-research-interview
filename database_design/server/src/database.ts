@@ -101,29 +101,15 @@ const getFilteredValues = async (type: FilterType, value: string) => {
     return [];
 } */
 
-
-const getManufacturers = async () => {
-    const query = `SELECT id, name FROM Materials.manufacturer`;
+const getTableIdsAndNames = async (table: string) => {
+    const query = `SELECT id, name FROM Materials.${table}`;
     const res = await pool.query(query);
     return res.rows;
 }
 
-const getMaterials = async () => {
-    const query = `SELECT id, name FROM Materials.material`;
-    const res = await pool.query(query);
-    return res.rows;
-}
-
-const getBrands = async () => {
-    const query = `SELECT id, name FROM Materials.brand`;
-    const res = await pool.query(query);
-    return res.rows;
-}
 
 export {
-    getManufacturers,
-    getMaterials,
-    getBrands,
     getAllData,
-    getFilteredData
+    getFilteredData,
+    getTableIdsAndNames
 }
