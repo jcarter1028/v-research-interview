@@ -52,14 +52,22 @@ I could also have created models for each of combinations (e.g. `on-off` and `cg
 
 In a linear regression model, there are several metrics that can be used to determine how well a model has performed. These are based on the deviation between predictions testing values.
 
-Some examples of metrics that can be used
+Some examples of metrics that can be used:
+* R-square or Coefficient Determination: represents proportion of variance for a dependant variable, explained by independant variable. 
+* Mean Squarred Error (MSE): measure of average of square of the errors
+* Mean Absolute Error (MAE): measured error between paired observations - arithmetic average of absolute errors.
+* Standard Deviation: amount of variation or dispersion of the values.
 
+And a few more statistical techniques based on the error detection between predicted and actual.
+
+I've selected R2, MAE, and MSE for evaluating linear model. Choice of one of those would be enough to get an initial idea of how well the model is performing.
 
 **Results for training data containing `delta_t_ms`, `on-off` and `cg_temperature_cel`**
 
 <center>
-|    |Power    | Voltage | Current |
-|:---|-------- | :-----: | ------: |
+
+|       |   Power   | Voltage | Current |
+|-------| :-------: | ----    | --- |
 |MAE |0.11565  | 0.00906 | 0.01065 |
 |MSE |0.05658  | 0.00450 | 0.00582 |
 |R2  |0.77256  | 0.98117 | 0.97576 |
@@ -67,8 +75,10 @@ Some examples of metrics that can be used
 
 **Results for training data containing only `on-off`**
 <center>
-|    |Power    | Voltage | Current |
-|:---|-------- | :-----: | ------: |
+
+
+|       |   Power   | Voltage | Current |
+|-------| :-------: | ----    | --- |
 |MAE |0.11516  | 0.00906 | 0.01007 |
 |MSE |0.05826  | 0.00443 | 0.00469 |
 |R2  |0.76563  | 0.98150 | 0.98060 |
@@ -105,10 +115,7 @@ I have used sklearn's confusion metric and classification report, which contain 
 |0.06332| 0.94     | 
 
 
-Confusion Matrix:
 ![power matrix](plots/cnf_matrix_power_all.png)
-
-Classification Report:
 ![power report](plots/class_power_all.png)
 
 
@@ -118,10 +125,7 @@ Classification Report:
 |00.0046| 1.00     | 
 
 
-Confusion Matrix:
 ![voltage matrix](plots/cnf_matrix_voltage_all.png)
-
-Classification Report:
 ![voltage report](plots/class_voltage_all.png)
 
 
@@ -131,10 +135,7 @@ Classification Report:
 |0.00590| 0.99     | 
 
 
-Confusion Matrix:
 ![current matrix](plots/cnf_matrix_current_all.png)
-
-Classification Report:
 ![current report](plots/class_current_all.png)
 </center>
 
@@ -149,10 +150,9 @@ Classification Report:
 |0.06534| 0.93     | 
 
 
-Confusion Matrix:
+
 ![power matrix](plots/cnf_matrix_power_on-off.png)
 
-Classification Report:
 ![power report](plots/class_power_on-off.png)
 
 
@@ -162,10 +162,8 @@ Classification Report:
 |00.00445| 0.996     | 
 
 
-Confusion Matrix:
-![voltage matrix](plots/cnf_matrix_voltage_on-off.png)
 
-Classification Report:
+![voltage matrix](plots/cnf_matrix_voltage_on-off.png)
 ![voltage report](plots/class_voltage_on-off.png)
 
 
@@ -175,10 +173,7 @@ Classification Report:
 |0.004711| 0.995s    | 
 
 
-Confusion Matrix:
 ![current matrix](plots/cnf_matrix_current_on-off.png)
-
-Classification Report:
 ![current report](plots/class_current_on-off.png)
 </center>
 
@@ -190,4 +185,4 @@ Instructions:
 
 My understanding is to use the `date` and `active_power_w` to feed into a time forecasting model.
 
-However, there seems to be over 100 data points for each time slot.
+However, there seems to be over 100 data points for each time slot. This doesn't seem suited to a time-forecasting task. An additional discussion about the dataset would be needed.
