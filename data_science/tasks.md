@@ -1,23 +1,18 @@
 # Discussion Points for Data Science task
 
 ## Task 1 
-Open data frame and plot restuls.
+Open data frame, convert unix ms column to date time and plot results.
 
-**Read Data:**
-Use read_csv (read_excel didn't seem to identify duplicates)
+* **Read Data:** Use read_csv (read_excel didn't seem to identify duplicates)
 
-**Data Cleaning:** Dropped unused columns and duplicates - there were quite a lot!
+* **Data Cleaning:** Dropped unused columns and duplicates - there were quite a lot!
 
-**Converting Time:** Converting unix ms time to date time, and renaming column
+* **Converting Time:** Converting unix ms time to date time, and renaming column
 
-**Serial numbers:** Separate data frame by the 2 serial number (there are only 2 values, 227 and 30).
+* **Serial numbers:** Separate data frame by the 2 serial number (there are only 2 values, 227 and 30).
 
-**Plotting results:**
-Instruction was to plot columns as a function of time.
-
-The dataset for each serial number is over 100 thousand data points. Plotting all on one graph is too cumbersome and isn't useful for visualisation. I have therefore opted for taking a slice of the data frame (only about 1000 data points and plotting the results for that.)
-
-TODO: import data
+* **Plotting results:**
+Instruction was to plot columns as a function of time. The dataset for each serial number is over 100 thousand data points. Plotting all on one graph is too cumbersome and isn't useful for visualisation. I have therefore opted for taking a slice of the data frame (only about 1000 data points and plotting the results for that.)
 
 ## Task 2: Regression models
 
