@@ -1,14 +1,14 @@
-# Databse Design
-This Readme serves as a write-up for discussion around the database design task.
+# Database Design
+This README serves as a write-up for discussion around the database design task.
 
 ## Task 1: Database Design
 *Define relational database schema for the materials dataset.*
 
-Observations on the dataset and relationsips:
-* Brands are categorised using brand types
-* Manufacturers can make serveral brands: Manufacturer have a one-to-many relationship with Brands.
+Observations on the dataset and relationships:
+* Brands are categorised using brand types (Generic, Polyers, Generic Fibres, Metals & Alloys).
+* Manufacturers can have brands: Manufacturers have a one-to-many relationship with Brands.
 * Materials can have several brands: Materials have a one-to-many relationship with Brands
-* Manufacturers can make several Materials, and a Material can be made by several Manufacturers: there is a many-to-many relathionship between Manufacturers and Materials.
+* Manufacturers can make several Materials, and a Material can be made by several Manufacturers: there is a many-to-many relationship between Manufacturers and Materials.
 * Each Material has a unique formula, name, and CAS - so these should be grouped together to avoid repetition.
 * There are different Properties for each Brand: one-to-one relationship between Brands and Properties.
 
@@ -20,7 +20,7 @@ Using those observations, I designed the following schema for the dataset:
 
 ## Task 2: Data Import
 
-*Write a script or code to import the data from excel file into the database.*
+*Write a script or code to import the data from the excel file into the database.*
 
 I have created a small TypeScript project in the `database/` folder to open and parse the excel file, connect to a postgres database, and insert the values in the database.
 
@@ -33,7 +33,7 @@ I have created a small TypeScript project in the `database/` folder to open and 
 *Note: I have used TypeScript for this task, as I am more familiar with the language and array manipluation than python. However if the database was much bigger, I would have created a python script using pandas to parse the excel file using dataframe*
 
 ## Task 4: Server
-*Create a server with API endpoints return material properties in json format. Should allow filtering by brand name, manufacturer name, material name or material id.*
+*Create a server with API endpoints to return material properties in JSON format. Should allow filtering by brand name, manufacturer name, material name or material id.*
 
 In the `server/` folder, I have created a TypeScript express server. There are two files: 
 * `server.ts` - the implementation of the express server and handling of endpoints.
@@ -213,6 +213,9 @@ It builds a responsive UI with a search bar & button, and displays query results
 * `App.tsx`: Main component of the app pulling together Search bar, and Results, and handles calls to API helpers.
 * `SearchBar.tsx`: Implements Search bar and calls submit callback when search button pressed.
 * `QueryResults.tsx`: Displays results in tabular format. The table cells containing information on brand, manufacturer and material are clickeable, and will call the filtering method on the clicked value.
+
+**Utils**
+* The role of the `api.ts` file is to communicate with the server, and call the relevant endpoints to retrieve the query data, and pass it back to the components.
 
 ![Client UI](client_ui.png)
 
