@@ -19,7 +19,7 @@ Instruction was to plot columns as a function of time. The dataset for each seri
 The instructions are to create two different regression models to predict the values for the power, voltage and current based on values for delta_t_ms, on-off and cg_temperature. And evaluate the models.
 
 **Data exploration**
-It seems like the each of the data is in spikes. There seems to be quite a good correlation between on-off and the high-low values for the 
+It seems like the each of the data is in spikes. There seems to be quite a good correlation between on-off and the high-low values for each of the power, voltage, and current values that we have to predict.
 
 **Data pre-processing**
 I decided to represent the data to predict as binary data: off or on (0 or 1) depending on if the value is high or low. 
@@ -29,6 +29,10 @@ I created a `to_on_off` lambda function to transform each of the target columns 
 I then decided to predict if the value would be on, or off. 
 
 I tried linear regression, and logistic regression (suitable for predicting binary classes)
+
+*Note: I have trained the following model based on the binary data, and presented the results based on that. I have not re-converted binary values into actual voltage, current and power values.*
+
+*How I would do that: For each power/current/voltage, take all values rows where the on-off values is 1. Get the median value using the active_power_mw, output_voltage_v, output_current_ma columns, and assign the "actual prediction" for high to be that. Similarly, get median values for what "low" should be.*
 
 **Training and Testing dataset**
 
