@@ -3,9 +3,9 @@
 ## Task 1 
 Open data frame, convert unix ms column to date time and plot results.
 
-* **Read Data:** Use read_csv (read_excel didn't seem to identify duplicates)
+* **Read Data:** Use read_excel
 
-* **Data Cleaning:** Dropped unused columns and duplicates - there were quite a lot!
+* **Data Cleaning:** Dropped unused columns and duplicates. There are quite a lot of duplicates but they don't seem to get dropped...
 
 * **Converting Time:** Converting unix ms time to date time, and renaming column
 
@@ -67,9 +67,9 @@ I've selected R2, MAE, and MSE for evaluating linear model. Choice of one of tho
 
 |       |   Power   | Voltage | Current |
 |-------| :-------: | ----    | --- |
-|MAE |0.11565  | 0.00906 | 0.01065 |
-|MSE |0.05658  | 0.00450 | 0.00582 |
-|R2  |0.77256  | 0.98117 | 0.97576 |
+|MAE |0.08498  | 0.00718 | 0.00783 |
+|MSE |0.04143  | 0.00401 | 0.00349 |
+|R2  |0.82635  | 0.98374 | 0.98583 |
 </center>
 
 **Results for training data containing only `on-off`**
@@ -78,12 +78,12 @@ I've selected R2, MAE, and MSE for evaluating linear model. Choice of one of tho
 
 |       |   Power   | Voltage | Current |
 |-------| :-------: | ----    | --- |
-|MAE |0.11516  | 0.00906 | 0.01007 |
-|MSE |0.05826  | 0.00443 | 0.00469 |
-|R2  |0.76563  | 0.98150 | 0.98060 |
+|MAE |0.08264  | 0.00680 | 0.00822 |
+|MSE |0.04079  | 0.00337 | 0.00403 |
+|R2  |0.82899  | 0.98632 | 0.98360 |
 </center>
 
-For voltage and current predictions, only using on-off seems the yield slightly better results. For power, however, the MAE improves slightly, but the MSE and R2 scores are slightly worse.
+For power and voltage it seems that just using on-off has slightly better predictions. However, that doesn't seem to be the case for current, where the preidctions were slightly bettre using all three input variables.
 
 Linear regression is the most straighforward regression model and I therefore wanted to try it out on this dataset. Considering the dataset is represented by binary on/off values though, I didn't expect it to work so well.
 
@@ -111,7 +111,7 @@ I have used sklearn's confusion metric and classification report, which contain 
 *Power*
 |MSE    | Accuracy |
 |-------| :-------:| 
-|0.06332| 0.94     | 
+|0.04636| 0.95     | 
 
 
 ![power matrix](plots/cnf_matrix_power_all.png)
@@ -121,7 +121,7 @@ I have used sklearn's confusion metric and classification report, which contain 
 *Voltage*
 |MSE    | Accuracy |
 |-------| :-------:| 
-|00.0046| 1.00     | 
+|0.00405| 0.9959     | 
 
 
 ![voltage matrix](plots/cnf_matrix_voltage_all.png)
@@ -131,7 +131,7 @@ I have used sklearn's confusion metric and classification report, which contain 
 *Current*
 |MSE    | Accuracy |
 |-------| :-------:| 
-|0.00590| 0.99     | 
+|0.00590| 0.996  | 
 
 
 ![current matrix](plots/cnf_matrix_current_all.png)
@@ -146,7 +146,7 @@ I have used sklearn's confusion metric and classification report, which contain 
 *Power*
 |MSE    | Accuracy |
 |-------| :-------:| 
-|0.06534| 0.93     | 
+|0.04552| 0.95   | 
 
 
 
@@ -158,7 +158,7 @@ I have used sklearn's confusion metric and classification report, which contain 
 *Voltage*
 |MSE    | Accuracy |
 |-------| :-------:| 
-|00.00445| 0.996     | 
+|0.00338| 0.9967     | 
 
 
 
@@ -169,7 +169,7 @@ I have used sklearn's confusion metric and classification report, which contain 
 *Current*
 |MSE    | Accuracy |
 |-------| :-------:| 
-|0.004711| 0.995s    | 
+|0.00405| 0.996    | 
 
 
 ![current matrix](plots/cnf_matrix_current_on-off.png)
@@ -184,7 +184,6 @@ Instructions:
 
 My understanding is to use the `date` and `active_power_w` to feed into a time forecasting model.
 
-However, there seems to be over 100 data points for each time slot. This doesn't seem suited to a time-forecasting task. An additional discussion about the dataset would be needed.
 
 **Tools for time forecasting**
 
@@ -200,4 +199,4 @@ Different forecasters available, e.g. `NaiveForecaster`, `TrendForecaster`.
 
 **Evaluation**
 
-Many of the same metrics can be used with regards to regression problems - comparing predicted values with actual values and getting the error (e.g. MSE, MAE)l
+Many of the same metrics can be used with regards to regression problems - comparing predicted values with actual values and getting the error (e.g. MSE, MAE).
