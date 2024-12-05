@@ -185,3 +185,19 @@ Instructions:
 My understanding is to use the `date` and `active_power_w` to feed into a time forecasting model.
 
 However, there seems to be over 100 data points for each time slot. This doesn't seem suited to a time-forecasting task. An additional discussion about the dataset would be needed.
+
+**Tools for time forecasting**
+
+* Sktime
+Library allowing to do time forecasting. Reference: https://www.sktime.net/en/latest/api_reference/forecasting.html. 
+Different forecasters available, e.g. `NaiveForecaster`, `TrendForecaster`. 
+
+
+* Kats seems to have some good models avaialble - see https://github.com/facebookresearch/Kats/blob/main/tutorials/kats_201_forecasting.ipynb
+
+
+* Orbit - tool for Bayesian time-series forecasting - https://github.com/uber/orbit
+
+**Evaluation**
+
+Many of the same metrics can be used with regards to regression problems - comparing predicted values with actual values and getting the error (e.g. MSE, MAE)l
